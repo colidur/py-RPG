@@ -29,6 +29,4 @@ while running:
     player.take_damage(enemy_dmg)
     print("Enemy attacks for", enemy_dmg, ".Player HP:", player.get_hp())
 
-'''bcolors.ENDC est nécessaire à chaque fois qu'on utilise bcolors pour
-modifier une string'''
 
