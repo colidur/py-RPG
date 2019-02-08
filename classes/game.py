@@ -1,6 +1,5 @@
 import random
 
-
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[1;36;255m'
@@ -83,6 +82,27 @@ class Person:
                   '(x' + str(item['quantity']) + ')')
             i += 1   
     
+    def choose_target(self, enemies):
+        i = 1
+        print("\n" + bcolors.FAIL + " TARGET:" + bcolors.ENDC)
+        for enemy in enemies:
+            if enemy.get_hp() !=0:
+                print("       " + str(i) + ".", enemy.name)
+                i += 1
+        choice = int(input("Choose target: ")) - 1
+        return choice
+            
+    def choose_enemy_spell(self):
+        magic_choice = random.randrange(0, 3)
+        spell = self.magic[magic_choice]
+        pct = (self.hp / self.maxhp) * 100        
+        while spell.magic_type == "White" and pct > 50:
+            magic_choice = random.randrange(0, 3)
+            spell = self.magic[magic_choice]
+        magic_dmg = spell.generate_damage()
+        return spell, magic_dmg
+    
+    
     def get_enemy_stats(self):
         hp_bar = ""
         bar_ticks = (self.hp / self.maxhp) * 100 / 2
@@ -98,8 +118,8 @@ class Person:
         hp_string = str(self.hp) + "/" + str(self.maxhp)
         current_hp = ""
         
-        if len(hp_string) < len(str(self.maxhp) + "/" + str(self.maxhp)):
-            decreased_hp = len(str(self.maxhp) + "/" + str(self.maxhp)) - len(hp_string)      
+        if len(hp_string) < 11:
+            decreased_hp = 11 - len(hp_string)      
             
             while decreased_hp > 0:
                 current_hp += " "
@@ -112,8 +132,8 @@ class Person:
 
             
 #Print bars            
-        print('                        __________________________________________________')
-        print(self.name + '      ' + str(current_hp) + ' |' + bcolors.FAIL 
+        print('                         __________________________________________________')
+        print(self.name + '       ' + str(current_hp) + ' |' + bcolors.FAIL 
               + hp_bar + bcolors.ENDC + '|')
     
     
